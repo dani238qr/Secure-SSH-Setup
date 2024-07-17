@@ -8,7 +8,7 @@ check_root() {
     fi
 }
 
-install_packages() {
+detect_package_manager(){
     if command -v apt-get &> /dev/null; then
         echo "apt"
     elif command -v pacman &> /dev/null; then
@@ -21,10 +21,13 @@ install_packages() {
         echo "Unsupported package manager."
         exit 1
     fi
+}
 
+install_packages() {
     echo "installing openssh-server, openssh-client and ufw firewall"
 
-    local package_manager=$1
+    local package_manager=$(detect_package_manager)
+    echo "Detected package manager: $package_manager"
 
     case "$package_manager" in
         apt)
