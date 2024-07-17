@@ -12,6 +12,8 @@ Generate SSH Key Pair: Generates a new SSH key pair for secure authentication.
 
 Send Public Key via SSH: Copies the generated public key to a specified remote server for passwordless SSH login.
 
-Requirements
+Requirements:
+
 Root or sudo privileges
+
 Supported package manager (apt, pacman, dnf, or zypper)
