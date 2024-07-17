@@ -8,7 +8,7 @@ check_root() {
     fi
 }
 
-detect_package_manager() {
+install_packages() {
     if command -v apt-get &> /dev/null; then
         echo "apt"
     elif command -v pacman &> /dev/null; then
@@ -21,9 +21,7 @@ detect_package_manager() {
         echo "Unsupported package manager."
         exit 1
     fi
-}
 
-install_packages() {
     echo "installing openssh-server, openssh-client and ufw firewall"
 
     local package_manager=$1
@@ -135,7 +133,7 @@ show_menu() {
 
     read -p "Enter [1-6] > " choice
     case $choice in
-        1) install_packages ;;
+        1) install_packages  ;;
         2) config_ssh_port ;;
         3) config_ufw ;;
         4) generate_ssh_key ;;
