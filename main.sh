@@ -32,19 +32,26 @@ install_packages() {
     case "$package_manager" in
         apt)
             apt-get update
-            apt-get install -y openssh-server openssh-client ufw
+            apt-get install -y openssh ufw
+			apt-get update
+			systemctl start sshd
+		    systemctl enable sshd
+
             ;;
         pacman)
             pacman -Sy
-            pacman -S --noconfirm openssh-server openssh-client ufw 
+            pacman -S --noconfirm openssh ufw 
             pacman -Sy
+			systemctl start sshd
+		    systemctl enable sshd
+
             ;;
         dnf)
-            dnf install -y openssh-server openssh-client ufw
+            dnf install -y openssh ufw
             ;;
         zypper)
             zypper refresh
-            zypper install -y openssh-server openssh-client ufw
+            zypper install -y openssh  ufw
             ;;
         *)
             echo "Unsupported package manager."
@@ -71,8 +78,8 @@ config_ssh_port(){
         exit 1
     fi
     
-   # echo "Port $port" >> /etc/ssh/sshd_config
-    sed -i "/^Port/c\Port $port" /etc/ssh/sshd_config
+   	echo "Port $port" >> /etc/ssh/sshd_config
+    #sed -i "/^Port/c\Port $port" /etc/ssh/sshd_config
     echo "AddressFamily inet" >> /etc/ssh/sshd_config
     echo "PermitRootLogin no" >> /etc/ssh/sshd_config
     
@@ -80,7 +87,7 @@ config_ssh_port(){
     echo "port $port is set for ssh connection"
     echo "next time you connect to this server via ssh type ssh hostname@ip_address -P$port"
     
-    systemctl restart sshd
+	systemctl restart sshd
 
 }
 
