@@ -33,17 +33,19 @@ install_packages() {
         apt)
             apt-get update
             apt-get install -y openssh-server openssh-client ufw
-			apt-get update
-			systemctl start sshd
-		    systemctl enable sshd
+	    apt-get update
+            systemctl start ssh
+	    systemctl enable ssh
+            systemctl start sshd
+	    systemctl enable sshd
 
             ;;
         pacman)
             pacman -Sy
             pacman -S --noconfirm openssh ufw 
             pacman -Sy
-			systemctl start sshd
-		    systemctl enable sshd
+	    systemctl start sshd
+	    systemctl enable sshd
 
             ;;
         dnf)
@@ -88,6 +90,7 @@ config_ssh_port(){
     echo "next time you connect to this server via ssh type ssh hostname@ip_address -P$port"
     
 	systemctl restart sshd
+ 	systemctl restart ssh
 
 }
 
