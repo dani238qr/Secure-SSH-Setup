@@ -32,7 +32,7 @@ install_packages() {
     case "$package_manager" in
         apt)
             apt-get update
-            apt-get install -y openssh ufw
+            apt-get install -y openssh-server openssh-client ufw
 			apt-get update
 			systemctl start sshd
 		    systemctl enable sshd
